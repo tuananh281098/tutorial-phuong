@@ -8,13 +8,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find_by(id: parmas[:id]).destroy
+    @user = User.find_by(id: params[:id]).destroy
     flash[:success] = "User deleted"
-    redirect_to user
+    redirect_to @user
   end
 
   def show
     @user = User.find_by(id: params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
